@@ -1,0 +1,11 @@
+{
+  "$schema": "./node_modules/wrangler/config-schema.json",
+  // Must match the Worker/project name in the Cloudflare dashboard.
+  "name": "fitflex",
+  "compatibility_date": "2026-11-09",
+  // Static-only site: no Worker script, just the Next.js static export.
+  "assets": {
+    "directory": "./out",
+    "not_found_handling": "404-page"
+  }
+}
