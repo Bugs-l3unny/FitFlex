@@ -46,8 +46,6 @@ body {
   font-size: 1.0625rem;
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
-  /* Exposes the hero timeline to the sticky header. */
-  timeline-scope: --hero;
 }
 
 section[id] {
@@ -205,9 +203,10 @@ section[id] {
 
   @media (prefers-reduced-motion: no-preference) {
     .site-header {
+      /* Solidify within the first 80px of scroll so hero text never shows through the nav. */
       animation: header-solidify linear both;
-      animation-timeline: --hero;
-      animation-range: exit 0% exit 45%;
+      animation-timeline: scroll(root block);
+      animation-range: 0px 80px;
     }
   }
 }
@@ -245,9 +244,6 @@ section[id] {
 }
 
 /* ---------- Hero ---------- */
-.hero {
-  view-timeline: --hero block;
-}
 
 .excuse-q {
   --strike-delay: calc(0.5s + var(--i, 0) * 0.65s);

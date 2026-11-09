@@ -27,7 +27,7 @@ export default function Home() {
       </a>
       <Navbar />
       <main id="contenido">
-        <section id="inicio" aria-labelledby="hero-titulo" className="hero relative -mt-16 pb-14 pt-28 md:pb-20 md:pt-32">
+        <section id="inicio" aria-labelledby="hero-titulo" className="hero relative -mt-16 pb-10 pt-28 md:pb-12 md:pt-32">
           <div className="wrap">
             <div>
               <p className="inline-block rounded-full border border-linea bg-lona px-4 py-2 text-sm">
@@ -46,12 +46,12 @@ export default function Home() {
                   </span>
                 ))}
               </h1>
-              <div className="mt-8 grid gap-8 lg:grid-cols-[1fr_22rem] lg:items-end">
+              <div className="mt-10 grid gap-8 lg:grid-cols-[1fr_auto] lg:items-center lg:gap-12">
                 <div>
                   <p className="prose-fit text-lg text-tiza-suave">
                     Gimnasio de bajo costo en Cali con horarios flexibles y acompañamiento personalizado incluido.
                   </p>
-                  <div className="mt-6 flex flex-col gap-3 sm:flex-row">
+                  <div className="mt-6 flex flex-col gap-3 whitespace-nowrap sm:flex-row">
                     <a href="#test" className="btn btn-primary">
                       Hacer mi test gratis
                     </a>
