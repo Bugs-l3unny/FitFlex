@@ -1,0 +1,609 @@
+@import "tailwindcss";
+
+/* ---------- Design tokens ---------- */
+:root {
+  --caucho: #101814; /* page background: gym rubber floor */
+  --lona: #18231d; /* raised surfaces */
+  --linea: #2a3a31; /* borders and dividers */
+  --lima: #c6ff3d; /* neon accent: CTAs, key numbers, focus */
+  --morado: #8b5cf6; /* violet: only university, student toggle, Plus Amigo */
+  --morado-claro: #b79cff; /* readable violet for text on dark surfaces */
+  --tiza: #eef3ec; /* text */
+  --tiza-suave: #9aaaa0; /* muted text */
+  color-scheme: dark;
+}
+
+@theme inline {
+  --color-caucho: var(--caucho);
+  --color-lona: var(--lona);
+  --color-linea: var(--linea);
+  --color-lima: var(--lima);
+  --color-morado: var(--morado);
+  --color-morado-claro: var(--morado-claro);
+  --color-tiza: var(--tiza);
+  --color-tiza-suave: var(--tiza-suave);
+  --font-sans: var(--font-archivo), ui-sans-serif, system-ui, sans-serif;
+}
+
+/* ---------- Base ---------- */
+html {
+  scroll-behavior: smooth;
+  background: var(--caucho);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+body {
+  background: var(--caucho);
+  color: var(--tiza);
+  font-family: var(--font-sans);
+  font-stretch: 100%;
+  font-variation-settings: "wdth" 100;
+  font-size: 1.0625rem;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  /* Exposes the hero timeline to the sticky header. */
+  timeline-scope: --hero;
+}
+
+section[id] {
+  scroll-margin-top: 4.5rem;
+}
+
+:focus-visible {
+  outline: 3px solid var(--lima);
+  outline-offset: 3px;
+  border-radius: 0.25rem;
+}
+
+::selection {
+  background: var(--lima);
+  color: var(--caucho);
+}
+
+@layer components {
+/* ---------- Type ---------- */
+.display {
+  font-stretch: 125%;
+  font-variation-settings: "wdth" 125;
+  font-weight: 800;
+  line-height: 0.95;
+  letter-spacing: -0.01em;
+  text-wrap: balance;
+}
+
+.num {
+  font-stretch: 125%;
+  font-variation-settings: "wdth" 125;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
+}
+
+.normal-width {
+  font-stretch: 100%;
+  font-variation-settings: "wdth" 100;
+  line-height: 1.4;
+}
+
+.tabular {
+  font-variant-numeric: tabular-nums;
+}
+
+.prose-fit {
+  max-width: 62ch;
+}
+
+.wrap {
+  width: 100%;
+  max-width: 72rem;
+  margin-inline: auto;
+  padding-inline: 1rem;
+}
+
+@media (min-width: 640px) {
+  .wrap {
+    padding-inline: 1.5rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .wrap {
+    padding-inline: 2rem;
+  }
+}
+
+.sr-only-focusable:not(:focus):not(:focus-within) {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+}
+
+/* ---------- Buttons ---------- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 3rem;
+  padding: 0.75rem 1.5rem;
+  border-radius: 999px;
+  font-weight: 700;
+  font-stretch: 112%;
+  font-variation-settings: "wdth" 112;
+  line-height: 1.2;
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+  transition:
+    background-color 0.15s ease,
+    border-color 0.15s ease,
+    transform 0.15s ease;
+}
+
+.btn-primary {
+  background: var(--lima);
+  color: var(--caucho);
+  border: 2px solid var(--lima);
+}
+
+.btn-primary:hover {
+  background: #d8ff7a;
+  border-color: #d8ff7a;
+}
+
+.btn-primary:active {
+  transform: translateY(1px);
+}
+
+.btn-ghost {
+  background: transparent;
+  color: var(--tiza);
+  border: 2px solid var(--linea);
+}
+
+.btn-ghost:hover {
+  border-color: var(--tiza-suave);
+}
+
+.btn[aria-disabled="true"],
+.btn:disabled {
+  background: var(--lona);
+  border-color: var(--linea);
+  color: var(--tiza-suave);
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* ---------- Header and scroll progress ---------- */
+.site-header {
+  background: var(--caucho);
+  border-bottom: 1px solid var(--linea);
+}
+
+.scroll-progress {
+  position: fixed;
+  inset: 0 0 auto 0;
+  height: 3px;
+  z-index: 60;
+  background: var(--lima);
+  transform-origin: 0 50%;
+  pointer-events: none;
+}
+
+@supports (animation-timeline: scroll()) {
+  .scroll-progress {
+    transform: scaleX(0);
+    animation: grow-x linear both;
+    animation-timeline: scroll(root block);
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .site-header {
+      animation: header-solidify linear both;
+      animation-timeline: --hero;
+      animation-range: exit 0% exit 45%;
+    }
+  }
+}
+
+@supports not (animation-timeline: scroll()) {
+  .scroll-progress {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .scroll-progress {
+    display: none;
+  }
+}
+
+@keyframes grow-x {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+
+@keyframes header-solidify {
+  from {
+    background-color: transparent;
+    border-bottom-color: transparent;
+  }
+  to {
+    background-color: var(--caucho);
+    border-bottom-color: var(--linea);
+  }
+}
+
+/* ---------- Hero ---------- */
+.hero {
+  view-timeline: --hero block;
+}
+
+.excuse-q {
+  --strike-delay: calc(0.5s + var(--i, 0) * 0.65s);
+  background-image: linear-gradient(var(--lima), var(--lima));
+  background-repeat: no-repeat;
+  background-position: 0 58%;
+  background-size: 100% 0.09em;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+  color: var(--tiza-suave);
+  animation:
+    strike-draw 0.6s cubic-bezier(0.65, 0, 0.25, 1) var(--strike-delay) both,
+    question-dim 0.4s ease calc(var(--strike-delay) + 0.3s) both;
+}
+
+.excuse-a {
+  animation: answer-in 0.5s ease-out calc(0.5s + var(--i, 0) * 0.65s + 0.5s) both;
+}
+
+@keyframes strike-draw {
+  from {
+    background-size: 0% 0.09em;
+  }
+  to {
+    background-size: 100% 0.09em;
+  }
+}
+
+@keyframes question-dim {
+  from {
+    color: var(--tiza);
+  }
+  to {
+    color: var(--tiza-suave);
+  }
+}
+
+@keyframes answer-in {
+  from {
+    opacity: 0;
+    transform: translateY(0.5rem);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* Initial state before the strike: full-strength text */
+@media (prefers-reduced-motion: reduce) {
+  .excuse-q,
+  .excuse-a {
+    animation: none;
+  }
+}
+
+.live-dot {
+  width: 0.65rem;
+  height: 0.65rem;
+  border-radius: 999px;
+  background: var(--tiza-suave);
+  flex: none;
+}
+
+.live-dot[data-open="true"] {
+  background: var(--lima);
+  box-shadow: 0 0 0 0 color-mix(in oklab, var(--lima) 60%, transparent);
+  animation: pulse-ring 2s ease-out infinite;
+}
+
+@keyframes pulse-ring {
+  to {
+    box-shadow: 0 0 0 0.6rem transparent;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .live-dot[data-open="true"] {
+    animation: none;
+  }
+}
+
+/* ---------- Barbell slider ---------- */
+.barbell {
+  --plate: 2.25rem;
+  --bar: 0.75rem;
+  -webkit-appearance: none;
+  appearance: none;
+  display: block;
+  width: 100%;
+  height: 3rem;
+  margin: 0;
+  background: transparent;
+  cursor: grab;
+}
+
+.barbell:active {
+  cursor: grabbing;
+}
+
+.barbell:focus-visible {
+  outline: none;
+}
+
+.barbell::-webkit-slider-runnable-track {
+  height: var(--bar);
+  border-radius: 999px;
+  border: 1px solid var(--linea);
+  background: linear-gradient(
+    to right,
+    var(--lima) calc(var(--plate) / 2 + (100% - var(--plate)) * var(--ratio, 0)),
+    var(--caucho) 0
+  );
+}
+
+.barbell::-moz-range-track {
+  height: var(--bar);
+  border-radius: 999px;
+  border: 1px solid var(--linea);
+  background: linear-gradient(
+    to right,
+    var(--lima) calc(var(--plate) / 2 + (100% - var(--plate)) * var(--ratio, 0)),
+    var(--caucho) 0
+  );
+}
+
+.barbell::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: var(--plate);
+  height: var(--plate);
+  margin-top: calc((var(--bar) - var(--plate)) / 2 - 1px);
+  border-radius: 999px;
+  border: 4px solid var(--lima);
+  background: radial-gradient(circle, var(--lima) 0 3px, var(--lona) 4px);
+  box-shadow: 0 0 0 3px var(--caucho);
+  transition: transform 0.15s ease;
+}
+
+.barbell::-moz-range-thumb {
+  box-sizing: border-box;
+  width: var(--plate);
+  height: var(--plate);
+  border-radius: 999px;
+  border: 4px solid var(--lima);
+  background: radial-gradient(circle, var(--lima) 0 3px, var(--lona) 4px);
+  box-shadow: 0 0 0 3px var(--caucho);
+}
+
+.barbell:active::-webkit-slider-thumb {
+  transform: scale(1.08);
+}
+
+.barbell:focus-visible::-webkit-slider-thumb {
+  outline: 3px solid var(--tiza);
+  outline-offset: 4px;
+}
+
+.barbell:focus-visible::-moz-range-thumb {
+  outline: 3px solid var(--tiza);
+  outline-offset: 4px;
+}
+
+/* Compare bars: scaled with transform for smooth transitions */
+.compare-fill {
+  transform-origin: 0 50%;
+  transition: transform 0.45s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .compare-fill {
+    transition: none;
+  }
+  .barbell::-webkit-slider-thumb {
+    transition: none;
+  }
+}
+
+/* ---------- Switch (student toggle) ---------- */
+.switch-track {
+  position: relative;
+  width: 3.25rem;
+  height: 1.9rem;
+  border-radius: 999px;
+  background: var(--lona);
+  border: 2px solid var(--linea);
+  flex: none;
+  transition:
+    background-color 0.2s ease,
+    border-color 0.2s ease;
+}
+
+.switch-track::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 0.2rem;
+  width: 1.25rem;
+  height: 1.25rem;
+  margin-top: -0.625rem;
+  border-radius: 999px;
+  background: var(--tiza-suave);
+  transition:
+    transform 0.2s ease,
+    background-color 0.2s ease;
+}
+
+[aria-checked="true"] > .switch-track {
+  background: var(--morado);
+  border-color: var(--morado);
+}
+
+[aria-checked="true"] > .switch-track::after {
+  background: #fff;
+  transform: translateX(1.35rem);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .switch-track,
+  .switch-track::after {
+    transition: none;
+  }
+}
+
+/* ---------- Bento reveal (the one scroll reveal) ---------- */
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .bento-tile {
+      animation: tile-in ease-out both;
+      animation-timeline: view();
+      animation-range: entry 0% entry 55%;
+    }
+  }
+}
+
+@keyframes tile-in {
+  from {
+    opacity: 0.25;
+    transform: translateY(1.25rem) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* ---------- Routine test: radio options ---------- */
+.option-card {
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+  min-height: 3.5rem;
+  padding: 0.85rem 1.1rem;
+  border: 2px solid var(--linea);
+  border-radius: 1rem;
+  background: var(--lona);
+  cursor: pointer;
+  transition:
+    border-color 0.15s ease,
+    background-color 0.15s ease;
+}
+
+.option-card:hover {
+  border-color: var(--tiza-suave);
+}
+
+.option-card:has(input:checked) {
+  border-color: var(--lima);
+  background: color-mix(in oklab, var(--lima) 10%, var(--lona));
+}
+
+.option-card:has(input:focus-visible) {
+  outline: 3px solid var(--lima);
+  outline-offset: 3px;
+}
+
+.option-mark {
+  flex: none;
+  width: 1.4rem;
+  height: 1.4rem;
+  border-radius: 999px;
+  border: 2px solid var(--tiza-suave);
+  display: grid;
+  place-items: center;
+}
+
+.option-card:has(input:checked) .option-mark {
+  border-color: var(--lima);
+}
+
+.option-card:has(input:checked) .option-mark::after {
+  content: "";
+  width: 0.7rem;
+  height: 0.7rem;
+  border-radius: 999px;
+  background: var(--lima);
+}
+
+/* ---------- Plates progress ---------- */
+.plate {
+  display: grid;
+  place-items: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 999px;
+  border: 3px solid var(--linea);
+  background: var(--caucho);
+  color: var(--tiza-suave);
+  font-weight: 800;
+  font-stretch: 125%;
+  font-variation-settings: "wdth" 125;
+  font-size: 0.95rem;
+  transition:
+    background-color 0.3s ease,
+    border-color 0.3s ease,
+    color 0.3s ease,
+    transform 0.3s cubic-bezier(0.3, 1.5, 0.5, 1);
+}
+
+.plate[data-state="current"] {
+  border-color: var(--lima);
+  color: var(--lima);
+}
+
+.plate[data-state="done"] {
+  background: var(--lima);
+  border-color: var(--lima);
+  color: var(--caucho);
+  transform: scale(1.06);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .plate {
+    transition: none;
+  }
+}
+
+/* ---------- Shop backdrop ---------- */
+.shop-backdrop {
+  background: var(--caucho);
+  isolation: isolate;
+}
+
+.shop-backdrop img {
+  filter: grayscale(1) contrast(1.15) brightness(1.1);
+  opacity: 0.55;
+}
+
+/* Tints the black and white photo green */
+.shop-tint {
+  background: var(--lima);
+  mix-blend-mode: color;
+  opacity: 0.55;
+}
+
+.shop-scrim {
+  background: color-mix(in oklab, var(--caucho) 62%, transparent);
+}
+}
