@@ -48,13 +48,24 @@ export function ValueBento() {
         </p>
       </article>
 
-      <article className="bento-tile rounded-xl border border-linea bg-lona p-6 lg:col-span-5">
+      <article className="bento-tile photo-frame relative flex min-h-64 flex-col justify-end overflow-hidden rounded-xl border border-linea p-6 lg:col-span-5">
+        {/* Decorative photo of the dumbbell rack, tinted green. */}
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src="/images/dumbbell-rack.jpg"
+          alt=""
+          aria-hidden="true"
+          className="absolute inset-0 -z-10 h-full w-full object-cover"
+          loading="lazy"
+        />
+        <div className="photo-tint absolute inset-0 -z-10" aria-hidden="true" />
+        <div className="photo-scrim-bottom absolute inset-0 -z-10" aria-hidden="true" />
         <svg {...iconProps} className="h-9 w-9 text-lima">
           <path d="M20 4 7 9v10c0 8 6 14 13 17 7-3 13-9 13-17V9z" />
           <path d="m14 20 5 5 8-9" />
         </svg>
         <h3 className="display mt-4 text-xl">Espacios seguros y equipos de cardio y musculación</h3>
-        <p className="mt-2 text-tiza-suave">Mantenimiento preventivo, protocolos de seguridad y limpieza continua.</p>
+        <p className="mt-2 text-tiza">Mantenimiento preventivo, protocolos de seguridad y limpieza continua.</p>
       </article>
 
       <article className="bento-tile rounded-xl border border-linea bg-lona p-6 sm:p-8 lg:col-span-12">

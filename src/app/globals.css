@@ -581,25 +581,36 @@ section[id] {
   }
 }
 
-/* ---------- Shop backdrop ---------- */
-.shop-backdrop {
+/* ---------- Green-tinted photos ----------
+   Shared treatment for B/W gym photos: .photo-frame isolates the blend,
+   .photo-tint turns the photo lima, .photo-scrim darkens it for legible text. */
+.photo-frame {
   background: var(--caucho);
   isolation: isolate;
 }
 
-.shop-backdrop img {
+.photo-frame > img {
   filter: grayscale(1) contrast(1.15) brightness(1.1);
   opacity: 0.55;
 }
 
-/* Tints the black and white photo green */
-.shop-tint {
+.photo-tint {
   background: var(--lima);
   mix-blend-mode: color;
   opacity: 0.55;
 }
 
-.shop-scrim {
+.photo-scrim {
   background: color-mix(in oklab, var(--caucho) 62%, transparent);
+}
+
+/* Bottom-weighted scrim: keeps the photo visible on top, text legible below. */
+.photo-scrim-bottom {
+  background: linear-gradient(
+    to top,
+    var(--caucho) 8%,
+    color-mix(in oklab, var(--caucho) 55%, transparent) 60%,
+    color-mix(in oklab, var(--caucho) 25%, transparent)
+  );
 }
 }

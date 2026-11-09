@@ -82,10 +82,24 @@ export default function Home() {
 
         <Section id="test" labelledBy="test-titulo">
           <div className="grid gap-10 lg:grid-cols-[1fr_1.35fr] lg:gap-14">
-            <SectionHeading id="test-titulo" title="Tu rutina en 1 minuto">
-              Responde 4 preguntas y recibe un diagnóstico preliminar con el enfoque y el plan que te conviene. Si
-              quieres, lo envías a tu entrenador por WhatsApp.
-            </SectionHeading>
+            <div>
+              <SectionHeading id="test-titulo" title="Tu rutina en 1 minuto">
+                Responde 4 preguntas y recibe un diagnóstico preliminar con el enfoque y el plan que te conviene. Si
+                quieres, lo envías a tu entrenador por WhatsApp.
+              </SectionHeading>
+              {/* Decorative photo. 16:9 crop anchored to the top hides the source watermark in the bottom-left corner. */}
+              <div className="photo-frame relative mt-8 aspect-[16/9] overflow-hidden rounded-[1.5rem] border border-linea">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src="/images/barbell-grip.jpg"
+                  alt=""
+                  aria-hidden="true"
+                  className="absolute inset-0 -z-10 h-full w-full object-cover object-top"
+                  loading="lazy"
+                />
+                <div className="photo-tint absolute inset-0 -z-10" aria-hidden="true" />
+              </div>
+            </div>
             <RoutineWizard />
           </div>
         </Section>
@@ -97,7 +111,7 @@ export default function Home() {
           <Pricing />
         </Section>
 
-        <section id="productos" aria-labelledby="productos-titulo" className="shop-backdrop relative py-20 md:py-28">
+        <section id="productos" aria-labelledby="productos-titulo" className="photo-frame relative py-20 md:py-28">
           {/* Decorative photo, tinted green with a blend layer. */}
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
@@ -107,8 +121,8 @@ export default function Home() {
             className="absolute inset-0 -z-10 h-full w-full object-cover"
             loading="lazy"
           />
-          <div className="shop-tint absolute inset-0 -z-10" aria-hidden="true" />
-          <div className="shop-scrim absolute inset-0 -z-10" aria-hidden="true" />
+          <div className="photo-tint absolute inset-0 -z-10" aria-hidden="true" />
+          <div className="photo-scrim absolute inset-0 -z-10" aria-hidden="true" />
           <div className="wrap">
             <SectionHeading id="productos-titulo" title="Recarga energía antes y después de entrenar">
               Hidratación y suplementación básica. Arma tu pedido y recógelo hoy en recepción.
